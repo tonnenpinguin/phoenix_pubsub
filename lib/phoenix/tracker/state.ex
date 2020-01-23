@@ -26,7 +26,7 @@ defmodule Phoenix.Tracker.State do
           pids: ets_id,
           mode: :unset | :delta | :normal,
           delta: :unset | delta,
-          down_replicas: ets_id,,
+          down_replicas: ets_id,
           range: {context, context}
         }
 
@@ -61,7 +61,7 @@ defmodule Phoenix.Tracker.State do
       pids: :ets.new(:pids, [:duplicate_bag]),
       down_replicas: :ets.new(
         down_replicas_table(shard_name),
-        [:named_table, :protected, :bag]
+        [:named_table, :protected, :bag, {:read_concurrency, true}]
       )})
   end
 
